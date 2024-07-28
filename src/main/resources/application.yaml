@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/migrationdb}
+    username: ${DATASOURCE_USERNAME:postgres}
+    password: ${DATASOURCE_PASSWORD:postgres}
+    hikari:
+      pool-name: MigrationPool
+      connection-timeout: 80000
+# https://contribute.liquibase.com/extensions-integrations/directory/integration-docs/springboot/configuration/
+  liquibase:
+    enabled: true
+    drop-first: false
+    contexts: prod
+    change-log: classpath:liquibase/master.xml
+    database-change-log-lock-table: database_change_log_lock
+    database-change-log-table: database_change_log
+#    tag: ${version?:unknown}
+#    tag: ${project.'version'}
+    tag: 1.0.0-RELEASE
+#    tag: '@project.version@'
+    rollback-file: file.sql
+    show-summary: summary
+    show-summary-output: all
+#    label-filter: dev, qa, uat
+#    tag: FM.3.0.1
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,liquibase,env,configprops,metrics,conditions,heapdump,threaddump

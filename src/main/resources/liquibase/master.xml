@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+    <property name="floatType" value="float4" dbms="postgresql"/>
+    <property name="clobType" value="clob" dbms="postgresql"/>
+    <property name="blobType" value="blob" dbms="postgresql"/>
+    <property name="uuidType" value="uuid" dbms="postgresql"/>
+    <property name="datetimeType" value="datetime" dbms="postgresql"/>
+
+    <include file="changelog/2024Q1/ABC-01-initial-schema.xml" labels="rollback_v1ANDrollback_v2" relativeToChangelogFile="true"/>
+<!--    <include file="changelog/2024Q1/ABC-02-added-entity-class.xml" relativeToChangelogFile="true"/>-->
+<!--    <include file="changelog/2024Q1/ABC-03-added-entity-student.xml" relativeToChangelogFile="true"/>-->
+<!--    <include file="changelog/2024Q1/ABC-04-added-indexes.xml" relativeToChangelogFile="true"/>-->
+<!--    <include file="changelog/2024Q1/ABC-05-added-functions.xml" relativeToChangelogFile="true"/>-->
+<!--    <include file="changelog/2024Q1/ABC-06-added-triggers.xml" relativeToChangelogFile="true"/>-->
+<!--    <include file="changelog/2024Q1/ABC-07-added-views.xml" relativeToChangelogFile="true"/>-->
+
+<!--    <include file="changelog/2024Q2/ABC-08-deleted-triggers.xml" relativeToChangelogFile="true"/>-->
+<!--    <include file="changelog/2024Q2/ABC-09-added-entity-book.xml" relativeToChangelogFile="true"/>-->
+<!--    <include file="changelog/2024Q2/ABC-10-deleted-and-updated-indexes.xml" relativeToChangelogFile="true"/>-->
+<!--    <include file="changelog/2024Q2/ABC-11-changed-views.xml" relativeToChangelogFile="true"/>-->
+<!--    <include file="changelog/2024Q2/ABC-12-deleted-functions.xml" relativeToChangelogFile="true"/>-->
+
+</databaseChangeLog>

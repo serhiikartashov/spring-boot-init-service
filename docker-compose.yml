@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    container_name: postgres
+    image: public.ecr.aws/docker/library/postgres:15-alpine3.18
+    environment:
+      POSTGRES_DB: migrationdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432" # don't install any docker extensions which may lock postgres port, e.g. Kafka Sonar

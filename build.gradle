@@ -1,0 +1,80 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'io.freefair.lombok' version '8.4'
+    id 'com.avast.gradle.docker-compose' version '0.17.7'
+    id 'org.liquibase.gradle' version '2.2.1'
+    id 'net.researchgate.release' version '3.0.2'
+}
+
+group = 'com.example'
+version = project.version
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.liquibase:liquibase-core'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+springBoot {
+    buildInfo()
+}
+
+liquibase {
+    activities {
+        def liquibaseUrl = project.hasProperty('liquibaseUrl') ? liquibaseUrl : null
+        def liquibaseUsername = project.hasProperty('liquibaseUsername') ? liquibaseUsername : null
+        def liquibasePassword = project.hasProperty('liquibasePassword') ? liquibasePassword : null
+        main {
+            changeLogFile 'change-log.sql'
+            url liquibaseUrl
+            username liquibaseUsername
+            password liquibasePassword
+        }
+    }
+}
+
+dockerCompose {
+    useComposeFiles = ["${project.rootDir}/docker-compose.yml"]
+    startedServices = ['postgres-db']
+}
+
+release {
+    failOnCommitNeeded = true
+    failOnPublishNeeded = true
+    failOnSnapshotDependencies = true
+    failOnUnversionedFiles = true
+    failOnUpdateNeeded = true
+    preTagCommitMessage = '[Gradle Release Plugin] - Preparing for tag: '
+    tagCommitMessage = '[Gradle Release Plugin] - Tagging version: '
+    newVersionCommitMessage = '[Gradle Release Plugin] - Set new version: '
+    tagTemplate = '${version}-RELEASE'
+    versionPropertyFile = 'gradle.properties'
+    snapshotSuffix = '-SNAPSHOT'
+    revertOnFail = true
+    git {
+        requireBranch.set('main')
+        pushToRemote.set('origin')
+    }
+}
